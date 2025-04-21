@@ -1,0 +1,58 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login via API and use token in UI tests
+- Location: C:\Playwright\tests\api-login1.spec.js:4:5
+
+# Error details
+
+```
+Error: expect(received).toBeTruthy()
+
+Received: false
+    at C:\Playwright\tests\api-login1.spec.js:14:30
+```
+
+# Test source
+
+```ts
+   1 | // login-api.spec.ts
+   2 | import { test, request, expect } from '@playwright/test';
+   3 |
+   4 | test('Login via API and use token in UI tests', async ({ browser }) => {
+   5 |   // Step 1: Login via API and get auth token or session cookie
+   6 |   const apiContext = await request.newContext();
+   7 |   const loginResponse = await apiContext.post('https://www.amazon.com/api/login', {
+   8 |     data: {
+   9 |       email: 'your_email@example.com',
+  10 |       password: 'your_password'
+  11 |     }
+  12 |   });
+  13 |
+> 14 |   expect(loginResponse.ok()).toBeTruthy();
+     |                              ^ Error: expect(received).toBeTruthy()
+  15 |   const responseBody = await loginResponse.json();
+  16 |
+  17 |   // Assuming the response includes a token or session cookie
+  18 |   const token = responseBody.token;
+  19 |
+  20 |   // Step 2: Reuse token in browser context
+  21 |   const context = await browser.newContext({
+  22 |     extraHTTPHeaders: {
+  23 |       Authorization: `Bearer ${token}`
+  24 |     }
+  25 |   });
+  26 |
+  27 |   const page = await context.newPage();
+  28 |   await page.goto('https://www.amazon.com/your-account');
+  29 |
+  30 |   // Step 3: Assert login success
+  31 |   await expect(page.locator('text=Your Account')).toBeVisible();
+  32 | });
+  33 |
+```

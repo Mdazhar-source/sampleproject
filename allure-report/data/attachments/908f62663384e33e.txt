@@ -1,0 +1,67 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login API - Get Token and Use It
+- Location: C:\Playwright\tests\api-login1.spec.js:3:5
+
+# Error details
+
+```
+Error: expect(received).toBeTruthy()
+
+Received: false
+    at C:\Playwright\tests\api-login1.spec.js:24:30
+```
+
+# Test source
+
+```ts
+   1 | import { test, expect, request } from '@playwright/test';
+   2 |
+   3 | test('Login API - Get Token and Use It', async () => {
+   4 |   // Step 1: Create a request context
+   5 |   const context = await request.newContext();
+   6 |
+   7 |   // Step 2: Send login request
+   8 |   const loginResponse = await context.post('https://example.com/api/login', {
+   9 |     json: {
+  10 |       username: 'yourUsername',
+  11 |       password: 'yourPassword',
+  12 |     },
+  13 |     headers: {
+  14 |       'Content-Type': 'application/json',
+  15 |     },
+  16 |   });
+  17 |
+  18 |   // Step 3: Debug output
+  19 |   console.log('Status:', loginResponse.status());
+  20 |   const bodyText = await loginResponse.text();
+  21 |   console.log('Response:', bodyText);
+  22 |
+  23 |   // Step 4: Parse token
+> 24 |   expect(loginResponse.ok()).toBeTruthy(); // HTTP 2xx
+     |                              ^ Error: expect(received).toBeTruthy()
+  25 |   const body = JSON.parse(bodyText);
+  26 |   const token = body.token;
+  27 |   console.log('Token:', token);
+  28 |
+  29 |   // Step 5: Use the token for an authenticated request
+  30 |   const authContext = await request.newContext({
+  31 |     extraHTTPHeaders: {
+  32 |       Authorization: `Bearer ${token}`,
+  33 |     },
+  34 |   });
+  35 |
+  36 |   const userResponse = await authContext.get('https://example.com/api/user');
+  37 |   //expect(userResponse.ok()).toBeTruthy();
+  38 |
+  39 |   const userData = await userResponse.json();
+  40 |   console.log('User Data:', userData);
+  41 | });
+  42 |
+```

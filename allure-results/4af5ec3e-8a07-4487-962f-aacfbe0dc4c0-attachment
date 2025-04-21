@@ -1,0 +1,43 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: login API should return a token
+- Location: C:\Playwright\tests\api-login.spec.js:3:5
+
+# Error details
+
+```
+Error: expect(received).toBeTruthy()
+
+Received: false
+    at C:\Playwright\tests\api-login.spec.js:14:25
+```
+
+# Test source
+
+```ts
+   1 | import { test, expect, request } from '@playwright/test';
+   2 |
+   3 | test('login API should return a token', async () => {
+   4 |   const context = await request.newContext();
+   5 |   
+   6 |   const response = await context.post('https://testscp.haroob.com/api/login', {
+   7 |     data: {
+   8 |       username: 'create@test.com',
+   9 |       password: '4321',
+  10 |       token: ' DYWwFA9R8Cv67qS5WIHccY85TV0bFsqo9wVomV1G842d3932'
+  11 |     },
+  12 |   });
+  13 |
+> 14 |   expect(response.ok()).toBeTruthy();
+     |                         ^ Error: expect(received).toBeTruthy()
+  15 |
+  16 |   const body = await response.json();
+  17 |   expect(body).toHaveProperty('token');
+  18 | });
+```

@@ -1,0 +1,51 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Get auth token from login API
+- Location: C:\Playwright\tests\api-login1.spec.js:3:5
+
+# Error details
+
+```
+Error: expect(received).toBeTruthy()
+
+Received: false
+    at C:\Playwright\tests\api-login1.spec.js:14:25
+```
+
+# Test source
+
+```ts
+   1 | import { test, expect, request } from '@playwright/test';
+   2 |
+   3 | test('Get auth token from login API', async () => {
+   4 |   const context = await request.newContext();
+   5 |
+   6 |   const response = await context.post('https://example.com/api/login', {
+   7 |     data: {
+   8 |       username: 'myuser',
+   9 |       password: 'mypassword',
+  10 |     },
+  11 |   });
+  12 |
+  13 |   // Check if login was successful
+> 14 |   expect(response.ok()).toBeTruthy();
+     |                         ^ Error: expect(received).toBeTruthy()
+  15 |
+  16 |   // Get the response body
+  17 |   const body = await response.json();
+  18 |
+  19 |   // Extract and log the token
+  20 |   const token = body.token;
+  21 |   console.log('Auth Token:', token);
+  22 |
+  23 |   // Optional: validate token exists
+  24 |   expect(token).toBeDefined();
+  25 | });
+  26 |
+```

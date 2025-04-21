@@ -1,0 +1,59 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login and use token for authorized request
+- Location: C:\Playwright\tests\api-login1.spec.js:3:5
+
+# Error details
+
+```
+Error: expect(received).toBeTruthy()
+
+Received: false
+    at C:\Playwright\tests\api-login1.spec.js:12:30
+```
+
+# Test source
+
+```ts
+   1 | import { test, expect } from '@playwright/test';
+   2 |
+   3 | test('Login and use token for authorized request', async ({ request }) => {
+   4 |   // Step 1: Login and get token
+   5 |   const loginResponse = await request.post('https://testscp.haroob.com/api/login', {
+   6 |     data: {
+   7 |       username: 'create@test.com',
+   8 |       password: '4321',
+   9 |     },
+  10 |   });
+  11 |
+> 12 |   expect(loginResponse.ok()).toBeTruthy(); // Check login succeeded
+     |                              ^ Error: expect(received).toBeTruthy()
+  13 |
+  14 |   const loginData = await loginResponse.json();
+  15 |   const token = loginData.token; // Adjust if it's loginData.accessToken, etc.
+  16 |
+  17 |   expect(token).toBeTruthy();
+  18 |
+  19 |   // Step 2: Use token to make an authenticated request
+  20 |   const authResponse = await request.get('https://testscp.haroob.com/api/login', {
+  21 |     headers: {
+  22 |       //Authorization: `5379|DYWwFA9R8Cv67qS5WIHccY85TV0bFsqo9wVomV1G842d3932`,
+  23 |       Authorization: `Bearer ${token}`,
+  24 |     },
+  25 |   });
+  26 |
+  27 |   expect(authResponse.ok()).toBeTruthy();
+  28 |
+  29 |   const profileData = await authResponse.json();
+  30 |   console.log('Profile Data:', profileData);
+  31 |
+  32 |   // Optional: add more assertions
+  33 |   expect(profileData.username).toBe('your_username');
+  34 | });
+```

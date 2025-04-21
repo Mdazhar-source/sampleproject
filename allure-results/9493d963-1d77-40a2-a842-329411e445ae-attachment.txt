@@ -1,0 +1,11 @@
+Status: 422
+Response: {
+  message: 'The username field is required. (and 2 more errors)',
+  errors: {
+    username: [ 'The username field is required.' ],
+    password: [ 'The password field is required.' ],
+    device_name: [ 'The device name field is required.' ]
+  }
+}
+Status: 422
+{"message":"The username field is required. (and 2 more errors)","errors":{"username":["The username field is required."],"password":["The password field is required."],"device_name":["The device name field is required."]}}

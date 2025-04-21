@@ -1,0 +1,2 @@
+Status Code: 422
+Response Body: {"message":"Username or Password is incorrect. (and 1 more error)","errors":{"username or password":["Username or Password is incorrect."],"status":["False"]}}

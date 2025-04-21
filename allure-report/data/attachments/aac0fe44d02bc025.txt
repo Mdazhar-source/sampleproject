@@ -1,0 +1,43 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Use token in API request
+- Location: C:\Playwright\tests\api-login1.spec.js:3:5
+
+# Error details
+
+```
+Error: expect(received).toBeTruthy()
+
+Received: false
+    at C:\Playwright\tests\api-login1.spec.js:14:25
+```
+
+# Test source
+
+```ts
+   1 | import { test, expect, request } from '@playwright/test';
+   2 |
+   3 | test('Use token in API request', async () => {
+   4 |   const token = '5379|DYWwFA9R8Cv67qS5WIHccY85TV0bFsqo9wVomV1G842d3932'; // 👉 Replace with token from login API
+   5 |
+   6 |   const context = await request.newContext({
+   7 |     extraHTTPHeaders: {
+   8 |       Authorization: `Bearer ${token}`,
+   9 |     },
+  10 |   });
+  11 |
+  12 |   const response = await context.get('https://testscp.haroob.com/api/login');
+  13 |
+> 14 |   expect(response.ok()).toBeTruthy();
+     |                         ^ Error: expect(received).toBeTruthy()
+  15 |
+  16 |   const data = await response.json();
+  17 |   console.log('Protected data:', data);
+  18 | });
+```

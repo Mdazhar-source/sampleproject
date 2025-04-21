@@ -1,0 +1,2 @@
+Status Code: 201
+Response Body: {"status":"true","message":"Password Updated Successfully."}

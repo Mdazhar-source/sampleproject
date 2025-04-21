@@ -1,0 +1,12 @@
+Status: 403
+Response: <HTML><HEAD>
+<TITLE>Access Denied</TITLE>
+</HEAD><BODY>
+<H1>Access Denied</H1>
+ 
+You don't have permission to access "http&#58;&#47;&#47;example&#46;com&#47;api&#47;login" on this server.<P>
+Reference&#32;&#35;18&#46;5ca33017&#46;1744262298&#46;10a5038f
+<P>https&#58;&#47;&#47;errors&#46;edgesuite&#46;net&#47;18&#46;5ca33017&#46;1744262298&#46;10a5038f</P>
+</BODY>
+</HTML>
+

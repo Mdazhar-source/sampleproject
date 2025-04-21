@@ -1,0 +1,58 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: login API should return a token
+- Location: C:\Playwright\.github\workflows\API\api-login.spec.js:3:5
+
+# Error details
+
+```
+Error: expect(received).toBeTruthy()
+
+Received: false
+    at C:\Playwright\.github\workflows\API\api-login.spec.js:29:24
+```
+
+# Test source
+
+```ts
+   1 | import { test, expect, request } from '@playwright/test';
+   2 |
+   3 | test('login API should return a token', async () => {
+   4 |     const token = '2858|RGNwL09QKjc5FtsZVvR6r63VNVof2TvrlJdDjJH1f084639b'; // Replace with actual token
+   5 |
+   6 |     // Step 1: Create API context with Authorization header
+   7 |     const apiContext = await request.newContext({
+   8 |       extraHTTPHeaders: {
+   9 |         Authorization: `Bearer ${token}`,
+  10 |         'Content-Type': 'application/json'
+  11 |       }
+  12 |     });
+  13 |
+  14 |   const registrationPayload = {
+  15 |     username: 'create@test.com',
+  16 |     password: '4321',
+  17 |     device_name:'11233'
+  18 |
+  19 |   };
+  20 |
+  21 |   const response = await apiContext.post('https://testscp.haroob.com/api/login', {
+  22 |     data: registrationPayload
+  23 |   });
+  24 |
+  25 |   // Step 4: Check the response
+  26 |  
+  27 |  const status = response.status();
+  28 |  const body = await response.text(); // use text() for raw debugging
+> 29 |  expect(response.ok()).toBeTruthy();
+     |                        ^ Error: expect(received).toBeTruthy()
+  30 |  console.log('Status Code:', status);
+  31 |  console.log('Response Body:', body);
+  32 |
+  33 | });
+```

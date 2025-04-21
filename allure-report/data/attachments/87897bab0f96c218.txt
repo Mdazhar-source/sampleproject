@@ -1,0 +1,2 @@
+Status Code: 200
+Response Body: {"status":"false","message":"Meter already added"}
