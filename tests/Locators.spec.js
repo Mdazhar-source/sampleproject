@@ -12,6 +12,6 @@ test ('Locators', async ({page}) => {
 
     await page.locator('#login-submit').click();
 
-    await page.close();
+    //await page.close();
     
 });
